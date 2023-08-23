@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>User Dashboard</h2>
+    <form th:action="@{/dashboard}" method="get">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Full Name</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="user : ${users.content}">
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.fullName}"></td>
+            <td th:text="${user.status}"></td>
+        </tr>
+    </table>
+    <div th:if="${users.totalPages > 1}">
+        <ul class="pagination">
+            <li th:each="page : ${#numbers.sequence(0, users.totalPages - 1)}">
+                <a th:href="@{/dashboard(page=${page})}" th:text="${page + 1}"></a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
